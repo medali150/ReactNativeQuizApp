@@ -57,12 +57,20 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const login = async (email: string, password: string) => {
     try {
       const response = await authAPI.login(email, password);
+      console.log('Login response:', response);
+      
+      // Backend returns: { success: true, data: { _id, username, email, role, token } }
       const { token: newToken, ...userData } = response.data;
+      
+      if (!newToken) {
+        throw new Error('Token not received from server');
+      }
       
       await AsyncStorage.setItem('token', newToken);
       setToken(newToken);
       setUser(userData);
     } catch (error: any) {
+      console.error('Login error:', error);
       throw new Error(error.response?.data?.message || 'Login failed');
     }
   };
@@ -70,12 +78,20 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const register = async (username: string, email: string, password: string, role: string = 'user') => {
     try {
       const response = await authAPI.register(username, email, password, role);
+      console.log('Register response:', response);
+      
+      // Backend returns: { success: true, data: { _id, username, email, role, token } }
       const { token: newToken, ...userData } = response.data;
+      
+      if (!newToken) {
+        throw new Error('Token not received from server');
+      }
       
       await AsyncStorage.setItem('token', newToken);
       setToken(newToken);
       setUser(userData);
     } catch (error: any) {
+      console.error('Register error:', error);
       throw new Error(error.response?.data?.message || 'Registration failed');
     }
   };
