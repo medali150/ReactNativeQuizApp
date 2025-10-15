@@ -1,0 +1,23 @@
+{
+  "expo": {
+    "name": "Quiz App",
+    "slug": "quiz-app-mobile",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "backgroundColor": "#007AFF",
+      "resizeMode": "contain"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.quizapp.mobile"
+    },
+    "android": {
+      "package": "com.quizapp.mobile",
+      "adaptiveIcon": {
+        "backgroundColor": "#007AFF"
+      }
+    }
+  }
+}
