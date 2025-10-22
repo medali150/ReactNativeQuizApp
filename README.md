@@ -1,118 +1,127 @@
-# 📱 Full-Stack Quiz App
 
-A complete full-stack Quiz application with Express.js backend and React Native (Expo) mobile frontend.
+# � React Native Quiz App
+
+An advanced full-stack quiz application featuring:
+- **React Native (Expo) mobile frontend**
+- **Express.js + TypeScript backend**
+- **MongoDB database**
+- **AI-powered quiz generation (Groq Llama 3.3 70B, OpenAI-compatible API)**
+- **Dynamic backend IP configuration for seamless network changes**
+
 
 ## 🏗️ Project Structure
 
 ```
 reactNativeQuizApp/
-├── backend/           # Express.js + TypeScript + MongoDB
-└── mobile/            # React Native + Expo
+├── backend/        # Express.js, TypeScript, MongoDB, Groq/OpenAI integration
+├── mobile/         # React Native (Expo), dynamic API config
+├── AI_GENERATOR_README.md
+├── WIFI_IP_GUIDE.md
+└── README.md
 ```
+
 
 ## ✨ Features
 
-### Backend (Express.js + TypeScript + MongoDB)
-- ✅ JWT Authentication (Register, Login, Logout)
-- ✅ Role-based access control (Admin & User)
-- ✅ RESTful API with MVC architecture
-- ✅ MongoDB with Mongoose ODM
-- ✅ Quiz CRUD operations
-- ✅ Quiz submission and scoring
-- ✅ Request validation and error handling
+### Backend
+- JWT Authentication (Register, Login, Logout)
+- Role-based access control (Admin & User)
+- RESTful API (MVC architecture)
+- MongoDB with Mongoose ODM
+- Quiz CRUD operations
+- Quiz submission and automatic scoring
+- AI quiz generation (Groq Llama 3.3 70B, OpenAI-compatible)
+- Request validation and error handling
 
-### Mobile (React Native + Expo)
-- ✅ User authentication screens
-- ✅ Role-based navigation (Admin vs User)
-- ✅ Quiz taking interface
-- ✅ Admin dashboard for quiz management
-- ✅ AsyncStorage for JWT token management
-- ✅ Clean and intuitive UI
+### Mobile
+- User authentication screens
+- Role-based navigation (Admin/User)
+- Quiz taking interface
+- Admin dashboard for quiz management
+- Dynamic backend IP configuration (Settings screen)
+- AsyncStorage for JWT token management
+- Clean, intuitive UI
 
-## 🚀 Quick Start
+
+## � Getting Started
 
 ### Prerequisites
-- Node.js (v16 or higher)
-- MongoDB (running locally or MongoDB Atlas)
+- Node.js (v16+)
+- MongoDB (local or Atlas)
 - npm or yarn
-- Expo CLI (optional): `npm install -g expo-cli`
+- Expo CLI: `npm install -g expo-cli`
+- Groq API Key (for AI quiz generation)
 
-### 1️⃣ Backend Setup
+### Backend Setup
+1. Navigate to `backend/`
+2. Install dependencies:
+  ```sh
+  npm install
+  ```
+3. Create `.env` file:
+  ```env
+  PORT=5000
+  MONGO_URI=your_mongodb_uri
+  JWT_SECRET=your_secret_key
+  JWT_EXPIRE=7d
+  GROQ_API_KEY=your_groq_api_key
+  AI_MODEL=llama3-70b-8192
+  ```
+4. Start the server:
+  ```sh
+  npm run dev
+  ```
+5. Backend runs at `http://localhost:5000`
 
-```bash
-# Navigate to backend folder
-cd backend
+### Mobile Setup
+1. Navigate to `mobile/`
+2. Install dependencies:
+  ```sh
+  npm install
+  ```
+3. Start Expo development server:
+  ```sh
+  npm start
+  ```
+4. Run on device/emulator:
+  - Press `a` for Android emulator
+  - Press `i` for iOS simulator
+  - Scan QR code with Expo Go app
 
-# Install dependencies
-npm install
+### Dynamic Backend IP Configuration
+- Use the **Settings** screen in the mobile app to update the backend server IP address.
+- No code changes needed when switching WiFi networks.
+- See `WIFI_IP_GUIDE.md` for details.
 
-# Create .env file
-cp .env.example .env
 
-# Edit .env with your configuration
-# PORT=5000
-# MONGODB_URI=mongodb://localhost:27017/quizapp
-# JWT_SECRET=your_secret_key
-# JWT_EXPIRE=7d
-
-# Run development server
-npm run dev
-```
-
-The backend will run at `http://localhost:5000`
-
-### 2️⃣ Mobile Setup
-
-```bash
-# Navigate to mobile folder
-cd mobile
-
-# Install dependencies
-npm install
-
-# Update API URL in src/services/api.ts
-# For Android emulator: http://10.0.2.2:5000/api
-# For iOS simulator: http://localhost:5000/api
-# For physical device: http://YOUR_COMPUTER_IP:5000/api
-
-# Start Expo development server
-npm start
-```
-
-Then:
-- Press `a` for Android emulator
-- Press `i` for iOS simulator
-- Scan QR code with Expo Go app for physical device
-
-## 📋 API Endpoints
+## 📋 API Endpoints (Highlights)
 
 ### Authentication
-- `POST /api/auth/register` - Register new user
-- `POST /api/auth/login` - Login user
-- `GET /api/auth/me` - Get current user (Protected)
-- `POST /api/auth/logout` - Logout user (Protected)
+- `POST /api/auth/register` — Register new user
+- `POST /api/auth/login` — Login user
+- `GET /api/auth/me` — Get current user (Protected)
+- `POST /api/auth/logout` — Logout user (Protected)
 
 ### Quizzes
-- `GET /api/quizzes` - Get all quizzes (Protected)
-- `GET /api/quizzes/:id` - Get single quiz (Protected)
-- `POST /api/quizzes` - Create quiz (Admin only)
-- `PUT /api/quizzes/:id` - Update quiz (Admin only)
-- `DELETE /api/quizzes/:id` - Delete quiz (Admin only)
-- `POST /api/quizzes/:id/submit` - Submit quiz answers (Protected)
-- `GET /api/quizzes/submissions` - Get user submissions (Protected)
+- `GET /api/quizzes` — Get all quizzes (Protected)
+- `GET /api/quizzes/:id` — Get single quiz (Protected)
+- `POST /api/quizzes` — Create quiz (Admin only)
+- `PUT /api/quizzes/:id` — Update quiz (Admin only)
+- `DELETE /api/quizzes/:id` — Delete quiz (Admin only)
+- `POST /api/quizzes/:id/submit` — Submit quiz answers (Protected)
+- `GET /api/quizzes/submissions` — Get user submissions (Protected)
+
 
 ## 👥 User Roles
 
-### Admin
-- Create, edit, and delete quizzes
-- View all quizzes
+**Admin:**
+- Create, edit, delete quizzes
 - Manage quiz content
 
-### User
-- View available quizzes
+**User:**
 - Take quizzes
-- View quiz results
-- View submission history
+- View results and submission history
+
 
 ## 🔐 Creating Admin Account
 
@@ -127,12 +136,12 @@ POST /api/auth/register
   "role": "admin"
 }
 ```
-
 Regular users are created with default role "user".
+
 
 ## 🗄️ Database Models
 
-### User
+**User**
 ```typescript
 {
   username: String,
@@ -143,7 +152,7 @@ Regular users are created with default role "user".
 }
 ```
 
-### Quiz
+**Quiz**
 ```typescript
 {
   title: String,
@@ -164,7 +173,7 @@ Regular users are created with default role "user".
 }
 ```
 
-### Submission
+**Submission**
 ```typescript
 {
   userId: ObjectId (User),
@@ -176,75 +185,88 @@ Regular users are created with default role "user".
 }
 ```
 
+
 ## 🛠️ Tech Stack
 
-### Backend
-- **Express.js** - Web framework
-- **TypeScript** - Type safety
-- **MongoDB** - Database
-- **Mongoose** - ODM
-- **JWT** - Authentication
-- **bcryptjs** - Password hashing
-- **CORS** - Cross-origin requests
-- **dotenv** - Environment variables
+**Backend:**
+- Express.js
+- TypeScript
+- MongoDB
+- Mongoose
+- JWT
+- bcryptjs
+- CORS
+- dotenv
+- Groq/OpenAI SDK
 
-### Mobile
-- **React Native** - Mobile framework
-- **Expo** - Development platform
-- **TypeScript** - Type safety
-- **React Navigation** - Navigation
-- **Axios** - HTTP client
-- **AsyncStorage** - Local storage
+**Mobile:**
+- React Native (Expo)
+- TypeScript
+- React Navigation
+- Axios
+- AsyncStorage
 
-## 📱 Screenshots & Flow
 
-### User Flow
+## 📱 User & Admin Flow
+
+**User:**
 1. Login/Register → 2. Home (Quiz List) → 3. Take Quiz → 4. View Results
 
-### Admin Flow
+**Admin:**
 1. Login → 2. Admin Dashboard → 3. Create/Edit/Delete Quizzes
+
 
 ## 🔧 Development
 
-### Backend Development
-```bash
+**Backend:**
+```sh
 cd backend
 npm run dev      # Run with nodemon
 npm run build    # Build TypeScript
 npm start        # Run production
 ```
 
-### Mobile Development
-```bash
+**Mobile:**
+```sh
 cd mobile
 npm start        # Start Expo dev server
 npm run android  # Run on Android
 npm run ios      # Run on iOS
 ```
 
+
 ## 🐛 Troubleshooting
 
-### Backend Issues
-- **MongoDB Connection Error**: Ensure MongoDB is running and MONGODB_URI is correct
-- **Port Already in Use**: Change PORT in .env file
-- **JWT Error**: Set JWT_SECRET in .env
+**Backend:**
+- MongoDB Connection Error: Ensure MongoDB is running and MONGO_URI is correct
+- Port Already in Use: Change PORT in .env
+- JWT Error: Set JWT_SECRET in .env
+- API Key Error: Set GROQ_API_KEY in .env
 
-### Mobile Issues
-- **Cannot connect to backend**: Check API_URL in `mobile/src/services/api.ts`
-- **Module not found**: Run `npm install` or `npx expo install`
-- **AsyncStorage error**: Run `npx expo install @react-native-async-storage/async-storage`
+**Mobile:**
+- Cannot connect to backend: Update backend IP in Settings screen
+- Module not found: Run `npm install` or `npx expo install`
+- AsyncStorage error: Run `npx expo install @react-native-async-storage/async-storage`
+
 
 ## 📝 License
 
-MIT
+This project is licensed under the MIT License. See the [LICENSE](./LICENSE) file for details.
+
 
 ## 👤 Author
 
-Your Name
+Mohamedali Gharbi
 
 ## 🤝 Contributing
 
 Contributions, issues, and feature requests are welcome!
+
+---
+
+## 📚 Documentation
+- [AI_GENERATOR_README.md](./AI_GENERATOR_README.md): AI quiz logic
+- [ARCHITECTURE.md](./ARCHITECTURE.md): Architecture of the project  
 
 ---
 
