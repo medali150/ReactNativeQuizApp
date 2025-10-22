@@ -15,6 +15,7 @@ import EditQuizScreenNew from './src/screens/EditQuizScreenNew';
 import ProfileScreen from './src/screens/ProfileScreen';
 import AdminUsersScreen from './src/screens/AdminUsersScreen';
 import AIQuizGeneratorScreen from './src/screens/AIQuizGeneratorScreen';
+import SettingsScreen from './src/screens/SettingsScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -27,6 +28,11 @@ function AuthStack() {
     >
       <Stack.Screen name="Login" component={LoginScreen} />
       <Stack.Screen name="Register" component={RegisterScreen} />
+      <Stack.Screen 
+        name="Settings" 
+        component={SettingsScreen}
+        options={{ headerShown: true, title: 'Server Settings' }}
+      />
     </Stack.Navigator>
   );
 }
@@ -48,6 +54,11 @@ function UserStack() {
         name="Profile"
         component={ProfileScreen}
         options={{ title: 'My Profile' }}
+      />
+      <Stack.Screen
+        name="Settings"
+        component={SettingsScreen}
+        options={{ title: 'Server Settings' }}
       />
     </Stack.Navigator>
   );
@@ -85,6 +96,11 @@ function AdminStack() {
         name="Profile"
         component={ProfileScreen}
         options={{ title: 'My Profile' }}
+      />
+      <Stack.Screen
+        name="Settings"
+        component={SettingsScreen}
+        options={{ title: 'Server Settings' }}
       />
     </Stack.Navigator>
   );

@@ -84,6 +84,13 @@ export default function LoginScreen({ navigation }: any) {
                 Don't have an account? <Text style={styles.linkBold}>Register</Text>
               </Text>
             </TouchableOpacity>
+
+            <TouchableOpacity
+              style={styles.settingsButton}
+              onPress={() => navigation.navigate('Settings')}
+            >
+              <Text style={styles.settingsText}>⚙️ Server Settings</Text>
+            </TouchableOpacity>
           </View>
         </View>
       </ScrollView>
@@ -152,5 +159,19 @@ const styles = StyleSheet.create({
   linkBold: {
     color: '#007AFF',
     fontWeight: 'bold',
+  },
+  settingsButton: {
+    marginTop: 30,
+    padding: 12,
+    borderRadius: 10,
+    backgroundColor: '#F0F0F0',
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#DDD',
+  },
+  settingsText: {
+    color: '#666',
+    fontSize: 14,
+    fontWeight: '600',
   },
 });

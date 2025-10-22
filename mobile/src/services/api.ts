@@ -1,16 +1,74 @@
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-// IMPORTANT: Update this IP address to match your computer's IP
-// Run "ipconfig" on Windows to find your IPv4 Address
-const API_URL = 'http://192.168.1.194:5000/api';
+// Default API URL - can be changed dynamically
+let API_URL = 'http://192.168.100.20:5000/api';
+
+// Load saved API URL from storage
+const loadApiUrl = async () => {
+  try {
+    const savedUrl = await AsyncStorage.getItem('apiUrl');
+    if (savedUrl) {
+      API_URL = savedUrl;
+      api.defaults.baseURL = savedUrl;
+    }
+  } catch (error) {
+    console.log('Error loading API URL:', error);
+  }
+};
+
+// Initialize API URL on app start
+loadApiUrl();
 
 const api = axios.create({
   baseURL: API_URL,
   headers: {
     'Content-Type': 'application/json',
   },
+  timeout: 10000, // 10 second timeout
 });
+
+// Function to update API URL dynamically
+export const updateApiUrl = async (newUrl: string) => {
+  try {
+    // Remove trailing slash if present
+    const cleanUrl = newUrl.replace(/\/$/, '');
+    API_URL = cleanUrl;
+    api.defaults.baseURL = cleanUrl;
+    await AsyncStorage.setItem('apiUrl', cleanUrl);
+    console.log('API URL updated to:', cleanUrl);
+    return true;
+  } catch (error) {
+    console.error('Error updating API URL:', error);
+    return false;
+  }
+};
+
+// Function to get current API URL
+export const getApiUrl = () => API_URL;
+
+// Function to test API connection
+export const testApiConnection = async (url?: string): Promise<{ success: boolean; message: string }> => {
+  try {
+    const testUrl = url ? url.replace(/\/$/, '') : API_URL;
+    const response = await axios.get(`${testUrl.replace('/api', '')}/api/health`, {
+      timeout: 5000,
+    });
+    
+    if (response.data.success) {
+      return { success: true, message: 'Connection successful!' };
+    }
+    return { success: false, message: 'Server responded but health check failed' };
+  } catch (error: any) {
+    if (error.code === 'ECONNABORTED') {
+      return { success: false, message: 'Connection timeout. Check if server is running.' };
+    }
+    if (error.message.includes('Network Error')) {
+      return { success: false, message: 'Cannot reach server. Check IP address and WiFi connection.' };
+    }
+    return { success: false, message: error.message || 'Connection failed' };
+  }
+};
 
 // Add token to requests
 api.interceptors.request.use(
